@@ -3,33 +3,32 @@ package com.example.taskcalendar.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
-import java.util.Date
 
 
 @Entity(tableName = "task_table")
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
+    var id: Long = 0L,
     @ColumnInfo(name="title")
-    val title: String = "",
+    var title: String = "",
     @ColumnInfo(name="description")
-    val description: String = "",
+    var description: String = "",
     @ColumnInfo(name="frequency")
-    val frequency: String = "Weekly",
+    var frequency: String = "Weekly",
     @ColumnInfo(name="implementation_window")
-    val implementationWindow: Int = 3,
+    var implementationWindow: String = "3",
     @ColumnInfo(name="last_completed_date")
-    val lastCompletedDate: LocalDateTime = LocalDateTime.now(),
+    var lastCompletedDate: LocalDate = LocalDate.now(),
     @ColumnInfo(name="next_scheduled_date")
-    val nextScheduledDateTime: LocalDateTime = LocalDateTime.now().plusDays(1),
+    var nextScheduledDateTime: LocalDateTime = LocalDateTime.now().plusDays(1),
     @ColumnInfo(name="is_completed")
-    val isCompleted: Boolean = false,
+    var isCompleted: Boolean = false,
     @ColumnInfo(name="is_missed")
-    val isMissed: Boolean = false,
+    var isMissed: Boolean = false,
     @ColumnInfo(name="is_in_progress")
-    val isInProgress: Boolean = false,
+    var isInProgress: Boolean = false,
     @ColumnInfo(name="is_scheduled")
-    val isScheduled: Boolean = false
+    var isScheduled: String = "Unscheduled"
     )

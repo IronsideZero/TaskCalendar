@@ -1,5 +1,6 @@
 package com.example.taskcalendar.views
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,10 +33,12 @@ import androidx.navigation.NavController
 import com.example.taskcalendar.TaskController
 import com.example.taskcalendar.nav.RouteList
 import com.example.taskcalendar.utils.Day
+import com.example.taskcalendar.utils.MonthHeader
 import com.example.taskcalendar.utils.TaskItem
 import com.example.taskcalendar.viewmodels.MainViewModel
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import java.time.YearMonth
 
@@ -62,6 +65,7 @@ fun MainView(
     val startMonth = remember {currentMonth.minusMonths(100)}
     val endMonth = remember {currentMonth.plusMonths(100)}
     val firstDayOfWeek = remember { firstDayOfWeekFromLocale()}
+    val daysOfWeek = remember { daysOfWeek() }
     val calendarState = rememberCalendarState(
         startMonth = startMonth,
         endMonth = endMonth,
@@ -92,29 +96,33 @@ fun MainView(
                 }
             }
         ) {
-            Spacer(modifier = Modifier.height(10.dp))
-            HorizontalCalendar(
-                state = calendarState,
-                dayContent = { Day(it)}
-            )
-            Divider(color = Color.LightGray)
-            Spacer(modifier = Modifier.height(10.dp))
-            val taskList = controller.getAllTasks.collectAsState(initial = listOf())
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-            ) {
-                //list of tasks goes here
-                items(taskList.value, key={task -> task.id}) {
-                    task ->
+            Column{
+                Spacer(modifier = Modifier.height(10.dp))
+                HorizontalCalendar(
+                    state = calendarState,
+                    dayContent = { Day(it)},
+                    monthHeader = {MonthHeader(daysOfWeek = daysOfWeek, currentMonth = calendarState.firstVisibleMonth)}
+                )
+                Divider(color = Color.LightGray)
+                Spacer(modifier = Modifier.height(10.dp))
+                val taskList = controller.getAllTasks.collectAsState(initial = listOf())
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
+                    //list of tasks goes here
+                    items(taskList.value, key={task -> task.id}) {
+                            task ->
                         //for each Task, make a TaskItem composable, and for the onclick function, pass the id and navigate to the add/edit page with that id
                         TaskItem(task) {
                             val id = task.id
                             navController.navigate(RouteList.AddEditTaskView.route + "/$id")
                         }
+                    }
                 }
             }
+
         }
     }
 }

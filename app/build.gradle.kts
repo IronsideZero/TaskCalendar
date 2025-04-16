@@ -67,6 +67,16 @@ dependencies {
     implementation("com.kizitonwose.calendar:view:$calendarVersion")
     implementation("com.kizitonwose.calendar:compose:$calendarVersion")
 
+    //notification stuff
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
+
+    //alt notification stuff
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.31.1-alpha")
+
+    //stringify object
+    implementation("com.google.code.gson:gson:2.10.1")
+
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.compose.ui:ui:$compose_version")
     implementation("androidx.compose.material:material:$compose_version")

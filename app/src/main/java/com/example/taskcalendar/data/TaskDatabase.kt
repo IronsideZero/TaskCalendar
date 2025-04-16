@@ -11,7 +11,8 @@ import androidx.room.TypeConverters
     exportSchema = false
 )
 @TypeConverters(
-    LocalDateTimeConverter::class
+    LocalDateTimeConverter::class,
+    LocalDateConverter::class
 )
 abstract class TaskDatabase: RoomDatabase() {
     abstract fun taskDAO(): TaskDAO
